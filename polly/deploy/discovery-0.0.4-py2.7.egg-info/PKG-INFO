@@ -1,0 +1,14 @@
+Metadata-Version: 1.0
+Name: discovery
+Version: 0.0.4
+Summary: Python library for getting values from ETCD
+Home-page: http://github.com/zymbit/discovery
+Author: Roberto Aguilar
+Author-email: roberto@zymbit.com
+License: LICENSE.txt
+Description: discovery
+        =========
+        
+        Python library for getting values from ETCD
+        
+Platform: UNKNOWN

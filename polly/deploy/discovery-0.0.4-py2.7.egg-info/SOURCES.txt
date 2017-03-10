@@ -1,0 +1,7 @@
+discovery/__init__.py
+discovery/etcd.py
+discovery.egg-info/PKG-INFO
+discovery.egg-info/SOURCES.txt
+discovery.egg-info/dependency_links.txt
+discovery.egg-info/requires.txt
+discovery.egg-info/top_level.txt

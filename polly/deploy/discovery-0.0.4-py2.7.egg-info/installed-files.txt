@@ -1,0 +1,10 @@
+../discovery/__init__.py
+../discovery/etcd.py
+../discovery/__init__.pyc
+../discovery/etcd.pyc
+.
+dependency_links.txt
+PKG-INFO
+requires.txt
+SOURCES.txt
+top_level.txt
