@@ -1,2 +1,11 @@
 room
 room.pub
+*zip
+*pyc
+obj
+*json
+*pickle
+*txt
+*jpg
+response*
+
