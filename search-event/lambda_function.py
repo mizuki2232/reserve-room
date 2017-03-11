@@ -38,12 +38,12 @@ except Exception as e:
     print('message:' + str(e))
 
 with open('/tmp/.credentials/calendar-python-quickstart.json', 'wb') as data:
-    s3.download_fileobj('smart-recognition', 'calendar-python-quickstart.json', data)
+    s3.download_fileobj('your-bucket-name', 'calendar-python-quickstart.json', data)
 with open('/tmp/client_secret.json', 'wb') as data:
-    s3.download_fileobj('smart-recognition', 'client_secret.json', data)
+    s3.download_fileobj('your-bucket-name', 'client_secret.json', data)
 CLIENT_SECRET_FILE = '/tmp/client_secret.json'
 with open('/tmp/slack_name', 'wb') as data:
-    s3.download_fileobj('smart-recognition', 'slack_name', data)
+    s3.download_fileobj('your-bucket-name', 'slack_name', data)
 with open('/tmp/slack_name', 'r') as f:
     slack_name = pickle.load(f)
 
@@ -75,7 +75,7 @@ def get_credentials():
             credentials = tools.run(flow, store)
         print('Storing credentials to ' + credential_path)
     s3 = boto3.resource('s3')
-    s3.meta.client.upload_file('/tmp/.credentials/calendar-python-quickstart.json', 'smart-recognition', 'calendar-python-quickstart.json')
+    s3.meta.client.upload_file('/tmp/.credentials/calendar-python-quickstart.json', 'your-bucket-name', 'calendar-python-quickstart.json')
     return credentials
 
 
@@ -155,27 +155,13 @@ def lambda_handler(event, contect):
     return message.encode('utf-8')
 
 
-#use service credential.but this case, doesn't use because it does'nt recommended.
-#def get_service():
-#    credentials = ServiceAccountCredentials.from_p12_keyfile(
-#        service_account_email=SERVICE_ACCOUNT_ID,
-#        filename="privatekey.p12",
-#        scopes=SCOPES)
-#    http = credentials.authorize(httplib2.Http())
-#
-#    # Build the service object.
-#    service = build('calendar', 'v3', http=http)
-#
-#    return service
-
-
 def make_event():
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('calendar', 'v3', http=http)
     event = {
       'summary': 'Auto Booked',
-      'location': 'ServerWorks.LTD',
+      'location': 'your_company_name',
       'description': 'Resource booked by puppy.',
       'start': {
         'dateTime': now,
@@ -186,7 +172,7 @@ def make_event():
         'timeZone': 'Asia/Tokyo',
       },
       'attendees': [
-        {'email': slack_name + '@serverworks.co.jp'},
+        {'email': slack_name + '@your-address'},
         {'email': googlecalendar_resource_id}
       ],
       'reminders': {
@@ -215,4 +201,4 @@ def s3_post_message(message):
     f.close()
     # messageをS3にpost
     s3 = boto3.resource('s3')
-    s3.meta.client.upload_file('/tmp/message.txt', 'smart-recognition', 'message.txt')
+    s3.meta.client.upload_file('/tmp/message.txt', 'your-bucket-name', 'message.txt')

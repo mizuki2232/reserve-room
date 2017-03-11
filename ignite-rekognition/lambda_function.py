@@ -5,8 +5,6 @@ import boto3
 import pickle
 print 'Loading function'
 
-# todo:check face_id in dynamo.If not registered,guidance with polly
-# send registering mail after polly guidance
 def lambda_handler(event, context):
     rekognition_client = boto3.client('rekognition')
     s3 = boto3.resource('s3')
@@ -15,7 +13,7 @@ def lambda_handler(event, context):
             CollectionId='1',
             Image={
                 'S3Object': {
-                    'Bucket': 'smart-recognition',
+                    'Bucket': 'your-bucket-name',
                     'Name': 'detect.jpg'
                 }
             },
@@ -25,9 +23,9 @@ def lambda_handler(event, context):
         f = open('/tmp/message.txt', 'w')
         f.writelines(response)
         f.close()
-        s3.meta.client.upload_file('/tmp/message.txt', 'smart-recognition', 'message.txt')
+        s3.meta.client.upload_file('/tmp/message.txt', 'your-bucket-name', 'message.txt')
         sys.exit()
     with open('/tmp/response_txt', 'w') as f:
         pickle.dump(response, f)
-    s3.meta.client.upload_file('/tmp/response_txt', 'smart-recognition', 'rekognition-response/result.pickle')
+    s3.meta.client.upload_file('/tmp/response_txt', 'your-bucket-name', 'rekognition-response/result.pickle')
     return response
