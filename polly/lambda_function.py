@@ -17,7 +17,7 @@ s3 = boto3.resource('s3')
 s3_client = s3.meta.client
 polly_client = boto3.client('polly')
 
-response = s3_client.get_object(Bucket='smart-recognition', Key='message.txt')
+response = s3_client.get_object(Bucket='your-bucket-name', Key='message.txt')
 body = response['Body'].read()
 
 
@@ -52,5 +52,5 @@ def lambda_handler(event, contect):
         # The response didn't contain audio data, exit gracefully
         print("Could not stream audio")
         sys.exit(-1)
-    s3.meta.client.upload_file('/tmp/speech.mp3', 'smart-recognition', 'speech.mp3')
+    s3.meta.client.upload_file('/tmp/speech.mp3', 'your-bucket-name', 'speech.mp3')
     return body

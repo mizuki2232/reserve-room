@@ -19,10 +19,10 @@ except ImportError:
 # If modifying these scopes, delete your previously saved credentials
 # at ~/.credentials/calendar-python-quickstart.json
 SCOPES = 'https://www.googleapis.com/auth/calendar'
-APPLICATION_NAME = 'test-rekognition2'
+APPLICATION_NAME = 'your_google_application_name'
 s3 = boto3.client('s3')
 with open('/tmp/client_secret.json', 'wb') as data:
-    s3.download_fileobj('smart-recognition', 'client_secret.json', data)
+    s3.download_fileobj('your-bucket-name', 'client_secret.json', data)
 CLIENT_SECRET_FILE = '/tmp/client_secret.json'
 try:
     os.mkdir("/tmp/.credentials")
@@ -33,7 +33,7 @@ except Exception as e:
     print('body:' + str(e))
 
 with open('/tmp/.credentials/calendar-python-quickstart.json', 'wb') as data:
-    s3.download_fileobj('smart-recognition', 'calendar-python-quickstart.json', data)
+    s3.download_fileobj('your-bucket-name', 'calendar-python-quickstart.json', data)
 
 def get_credentials():
     """Gets valid user credentials from storage.
@@ -62,7 +62,7 @@ def get_credentials():
             credentials = tools.run(flow, store)
         print('Storing credentials to ' + credential_path)
     s3 = boto3.resource('s3')
-    s3.meta.client.upload_file('/tmp/.credentials/calendar-python-quickstart.json', 'smart-recognition', 'calendar-python-quickstart.json')
+    s3.meta.client.upload_file('/tmp/.credentials/calendar-python-quickstart.json', 'your-bucket-name', 'calendar-python-quickstart.json')
  
     return credentials
 

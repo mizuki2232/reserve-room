@@ -14,7 +14,7 @@ print 'Loading function'
 def lambda_handler(event, context):
     s3 = boto3.client('s3')
     with open('/tmp/obj', 'wb') as data:
-        s3.download_fileobj('smart-recognition', 'result_pickle', data)
+        s3.download_fileobj('your_bucket_name', 'result_pickle', data)
     with open('/tmp/obj', 'r') as f:
         rekognition_result  = pickle.load(f)
     try:
@@ -30,7 +30,7 @@ def lambda_handler(event, context):
         f.close()
         # messageをS3にpost
         s3 = boto3.resource('s3')
-        s3.meta.client.upload_file('/tmp/message.txt', 'smart-recognition', 'message.txt')
+        s3.meta.client.upload_file('/tmp/message.txt', 'your_bucket_name', 'message.txt')
         sys.exit()
         
 
@@ -46,5 +46,5 @@ def lambda_handler(event, context):
     with open('/tmp/slack_name_dump', 'w') as f:
         pickle.dump(slack_name, f)
     s3 = boto3.resource('s3')
-    s3.meta.client.upload_file('/tmp/slack_name_dump', 'smart-recognition', 'slack_name')
+    s3.meta.client.upload_file('/tmp/slack_name_dump', 'your_bucket_name', 'slack_name')
     return response
